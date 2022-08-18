@@ -47,6 +47,10 @@ const BAIVIET = mongoose.model('baiviets', new Schema({
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
+    // BAIVIET.find({}, function (err, result) {
+    //     if (err != null) throw err;
+    //     res.render('index', {data: result});
+    // })
     BAIVIET.find({}, function (err, result) {
         if (err != null) throw err;
         res.render('index', {data: result});
