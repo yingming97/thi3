@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <title>
+        <% TieuDe %>
+    </title>
+</head>
+<body class="mx-5 text-center" >
+<!--_room_name: String,-->
+<!--_intro: String,-->
+<!--_description: String,-->
+<!--_number: Number,-->
+<!--_price: Number,-->
+<!--_image: String,-->
+<!--_type: String,-->
+<form action="/update" enctype="multipart/form-data" method="post">
+    <img class=" rounded m-5" src="..\<%= data._image %>" width="300" height="200">
+    <input class="d-none" name="_image" value="<%= data._image %>">
+    <input class="d-none" name="_id" value="<%= data._id %>">
+    <input class="p-2 d-block form-control mx-xxl-5 my-2" value="<%= data._room_name %>" name="_room_name" type="text"
+           placeholder="Số phòng"
+           required> <br>
+    <input class="p-2 d-block form-control mx-xxl-5 my-2" value="<%= data._intro %>" name="_intro" type="text"
+           placeholder="Intro"
+           required> <br>
+    <input class="p-2 d-block form-control mx-xxl-5 my-2" value="<%= data._description %>" name="_description" type="text"
+           placeholder="Description"
+           required> <br>
+    <input class="p-2 d-block form-control mx-xxl-5 my-2" value="<%= data._number %>" name="_number" type="number"
+           placeholder="Number" required
+           min="0"> <br>
+    <input class="p-2 d-block form-control mx-xxl-5 my-2" value="<%= data._price %>" name="_price" type="number"
+           placeholder="Price" required
+           min="0"> <br>
+    <div class="form-check">
+        <input class="form-check-input p-2 d-block form-control mx-xxl-5 my-2" type="radio" name="flexRadioDefault"
+               id="flexRadioDefault2" >
+        <label class="form-check-label p-2 d-block form-control mx-xxl-5 my-2" for="flexRadioDefault2">
+          single_room
+        </label>
+    </div>
+    <div class="form-check">
+        <input class="form-check-input p-2 d-block form-control mx-xxl-5 my-2" type="radio" name="flexRadioDefault"
+               id="flexRadioDefault2" checked >
+        <label class="form-check-label p-2 d-block form-control mx-xxl-5 my-2" for="flexRadioDefault2">
+            double room
+        </label>
+    </div>
+
+
+    <button class="btn-outline-info rounded-3 fs-1 px-5 py-2" type="submit">Lưu</button>
+</form>
+
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+</body>
+</html>

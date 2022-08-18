@@ -20,10 +20,10 @@ var upload = multer({
     limits: {fileSize: 2 * 1024 * 1024},
     fileFilter: function (req, file, cb) {
         var ten = file.originalname;
-        if (ten.indexOf('.jpg') > -1) {
+        if (ten.indexOf('.jpg') > -1 || ten.indexOf('.png') > -1) {
             cb(null, true);
         } else {
-            cb(new Error("Duoi file phai la JPG"), false);
+            cb(new Error("Duoi file phai la JPG/PNG"), false);
         }
 
         if (ten.length > 14) {
@@ -31,17 +31,23 @@ var upload = multer({
         }
 
     }
-}).array('_anh', 3);
+}).array('_image', 1);
 
-const uri = "mongodb+srv://YingMing:01672545642Aa@cluster0.b8mwo.mongodb.net/Thi?retryWrites=true&w=majority";
+const uri = "mongodb+srv://YingMing:01672545642Aa@cluster0.b8mwo.mongodb.net/hienpvph18604?retryWrites=true&w=majority";
 mongoose.connect(uri).catch(err => console.log(err));
 
-
-const BAIVIET = mongoose.model('baiviets', new Schema({
-    _tieude: String,
-    _noidung: String,
-    _baiviet: String,
-    _anh: String,
+<!--(room_id, room_name, image, intro, description, number, price, type_id)-->
+const rooms = mongoose.model('rooms', new Schema({
+    _room_name: String,
+    _intro: String,
+    _description: String,
+    _number: Number,
+    _price: Number,
+    _image: String,
+    _type: String,
+}))
+const types = mongoose.model('types', new Schema({
+    type_name: String
 }))
 
 
@@ -51,9 +57,10 @@ router.get('/', function (req, res, next) {
     //     if (err != null) throw err;
     //     res.render('index', {data: result});
     // })
-    BAIVIET.find({}, function (err, result) {
+    rooms.find({}, function (err, result) {
         if (err != null) throw err;
         res.render('index', {data: result});
+        console.log(result[0]._image)
     })
 });
 
@@ -65,7 +72,11 @@ router.get('/danhSach', function (req, res, next) {
 });
 
 router.get('/insertForm/', function (req, res) {
-    res.render('insert', {title: 'Insert'})
+    types.find({}, function (error, result) {
+        if (error != null) throw error;
+        res.render('insert', {title: 'Insert', data: result})
+        console.log(result.length)
+    })
 });
 
 router.post('/insert', function (req, res, next) {
@@ -74,33 +85,74 @@ router.post('/insert', function (req, res, next) {
         if (err != null) {
             res.send(err.message)
         } else {
-            let _tieude = req.body._tieude;
-            let _noidung = req.body._noidung;
-            let _baiviet = req.body._baiviet;
-            let _anh = req.files[0].path;
-            _anh = _anh.replace('public', '');
-            console.log(_anh);
-            BAIVIET.insertMany({
-                _tieude: _tieude,
-                _noidung: _noidung,
-                _baiviet: _baiviet,
-                _anh: _anh
+            // _room_name: String,
+            //     _intro: String,
+            //     _description: String,
+            //     _number: Number,
+            //     _price: Number,
+            //     _image: String,
+            let _room_name = req.body._room_name;
+            let _intro = req.body._intro;
+            let _description = req.body._description;
+            let _number = req.body._number;
+            let _price = req.body._price;
+            let _type = "single room"
+            let _image = req.files[0].path;
+            _image = _image.replace('public', '');
+            console.log(_image);
+            rooms.insertMany({
+                _room_name: _room_name,
+                _intro: _intro,
+                _description: _description,
+                _number: _number,
+                _price: _price,
+                _image: _image,
+                _type: _type
             }, function (error, result) {
                 if (error) throw error;
                 // res.json({
-                //     _tieude: _tieude,
-                //     _noidung: _noidung,
-                //     _baiviet: _baiviet,
-                //     _anh: _anh
+                //     _room_name: _room_name,
+                //     _intro: _intro,
+                //     _description: _description,
+                //     _number: _number,
+                //     _price: _price,
+                //     _image: _image,
+                //     _type: _type
                 // })
                 res.redirect('/');
             })
         }
     })
 });
+router.get('/updateForm/', function (req, res) {
+    const id = req.query.id;
+    rooms.findOne({_id: id}, function (error, result) {
+        res.render('upload', {TieuDe:'Update',data: result})
+    })
+})
+router.post('/update', async function (req, res) {
+    let id = req.body._id
+    let _room_name = req.body._room_name;
+    let _intro = req.body._intro;
+    let _description = req.body._description;
+    let _number = req.body._number;
+    let _price = req.body._price;
+    let _type = "double room";
+    let _image = req.body._image;
+await rooms.updateOne({_id:id},{
+    _room_name: _room_name,
+    _intro: _intro,
+    _description: _description,
+    _number: _number,
+    _price: _price,
+    _image: _image,
+    _type: _type
+})
+    res.redirect('/')
+})
 router.get('/delete/', function (req, res) {
     const id = req.query.id;
-    BAIVIET.deleteOne({_id: id}, function (error) {
+    rooms.deleteOne({_id: id}, function (error) {
         if (error) throw error;
         res.redirect('/')
     })

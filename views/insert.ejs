@@ -4,19 +4,31 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <title>Thêm mới</title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='stylesheet' href='/stylesheets/style.css'/>
 </head>
 <body class="text-center">
-
+<!--(room_id, room_name, image, intro, description, number, price, type_id)-->
 <form action="/insert" enctype="multipart/form-data" method="post">
-    <input class="p-2 d-block form-control mx-xxl-5 my-2" name="_tieude" type="text" placeholder="Tiêu đề"
+    <input class="p-2 d-block form-control mx-xxl-5 my-2" name="_room_name" type="text" placeholder="Số phòng"
            required> <br>
-    <input class="p-2 d-block form-control mx-xxl-5 my-2" name="_noidung" type="text" placeholder="Nội dung"
+    <input class="p-2 d-block form-control mx-xxl-5 my-2" name="_image" type="file" multiple required><br>
+    <input class="p-2 d-block form-control mx-xxl-5 my-2" name="_intro" type="text" placeholder="Intro"
            required> <br>
-    <input class="p-2 d-block form-control mx-xxl-5 my-2" name="_baiviet" type="text" placeholder="Bài viết"
+    <input class="p-2 d-block form-control mx-xxl-5 my-2" name="_description" type="text" placeholder="Description"
            required> <br>
+    <input class="p-2 d-block form-control mx-xxl-5 my-2" name="_number" type="number" placeholder="Number" required
+           min="0"> <br>
+    <input class="p-2 d-block form-control mx-xxl-5 my-2" name="_price" type="number" placeholder="Price" required
+           min="0"> <br>
+    <% for(var i = 0;i < data.length;i++){ %>
+        <div class="form-check">
+            <input class="form-check-input p-2 d-block form-control mx-xxl-5 my-2" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
+            <label class="form-check-label p-2 d-block form-control mx-xxl-5 my-2" for="flexRadioDefault2">
+                <%=data[i].type_name%>
+            </label>
+        </div>
+    <% } %>
 
-    <input class="p-2 d-block form-control mx-xxl-5 my-2" name="_anh" type="file" multiple required ><br>
     <button class="btn-outline-info rounded-3 fs-1 px-5 py-2" type="submit">Thêm</button>
 </form>
 

@@ -25,14 +25,25 @@
     <!--            &lt;!&ndash;      </form>&ndash;&gt;-->
     <!--        </div>-->
     <!--    </nav>-->
+<!--    _room_name: String,-->
+<!--    _intro: String,-->
+<!--    _description: String,-->
+<!--    _number: Number,-->
+<!--    _price: Number,-->
+<!--    _image: String,-->
+<!--    _type:String-->
     <% for(var i = 0; i < data.length; i++){ %>
         <div class="m-5 rounded-3">
-            <img class=" rounded" src="..\<%= data[i]._anh %>" width="300" height="200">
+            <img class=" rounded" src="..\<%= data[i]._image %>" width="300" height="200">
             <div>
-                <h2 class="text-start text-black-50 ">Tiêu đề:<%= data[i]._tieude %> </h2>
-                <p class="text-start text-black-50 ">Nội dung: <%= data[i]._noidung %> </p>
-                <p class="text-start text-black-50 ">Bài viết: <%= data[i]._baiviet %> </p>
+                <h2 class="text-start text-black-50 ">Tên phòng : <%= data[i]._room_name %> </h2>
+                <p class="text-start text-black-50 ">Intro  :<%= data[i]._intro %> </p>
+                <p class="text-start text-black-50 ">Description : <%= data[i]._description %> </p>
+                <p class="text-start text-black-50 ">Number : <%= data[i]._number %> </p>
+                <p class="text-start text-black-50 ">Price : <%= data[i]._price %> </p>
+                <p class="text-start text-black-50 ">Type : <%= data[i]._type %> </p>
                 <a class="link-danger text-decoration-none ms-3" href="/delete/?id=<%= data[i]._id %>">Delete</a>
+                <a class="link-info text-decoration-none ms-2" href="/updateForm/?id=<%= data[i]._id %>">Update</a>
             </div>
             <hr>
         </div>
